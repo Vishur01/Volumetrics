@@ -9,6 +9,7 @@ AV = pickle.load(open('AV.pkl', 'rb'))
 Gmb = pickle.load(open('Gmb.pkl', 'rb'))
 VMA = pickle.load(open('VMA.pkl', 'rb'))
 VFB = pickle.load(open('VFB.pkl', 'rb'))
+OBC = pickle.load(open('OBC.pkl', 'rb'))
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -21,7 +22,7 @@ def index():
 
 @app.route('/input_page/<model>', methods=['GET', 'POST'])
 def input_page(model):
-    pred1, pred2, pred3, pred4 = None, None, None, None  # Initialize predictions
+    pred1, pred2, pred3, pred4, pred5 = None, None, None, None, None  # Initialize predictions
 
     if request.method == 'POST':
         # Retrieve form data
@@ -38,6 +39,7 @@ def input_page(model):
         
         # Convert input data to a format that the model expects
         input_data = np.array([[aggregate, source, viscosity, dag, compaction]])
+        input_data1 = np.array([[aggregate, source, viscosity, dag]])
 
         # Make prediction using the selected models
         if model == 'volumetrics':
@@ -45,11 +47,12 @@ def input_page(model):
             pred2 = np.round(Gmb.predict(input_data), 2)
             pred3 = np.round(VMA.predict(input_data), 2)
             pred4 = np.round(VFB.predict(input_data), 2)
+            pred5 = np.round(OBC.predict(input_data1), 2)
             
             # Return the rendered template with predictions
-            return render_template('input_page.html', model=model, pred1=pred1, pred2=pred2, pred3=pred3, pred4=pred4)
+            return render_template('input_page.html', model=model, pred1=pred1, pred2=pred2, pred3=pred3, pred4=pred4, pred5=pred5)
 
-    return render_template('input_page.html', model=model, pred1=pred1, pred2=pred2, pred3=pred3, pred4=pred4)
+    return render_template('input_page.html', model=model, pred1=pred1, pred2=pred2, pred3=pred3, pred4=pred4, pred5=pred5)
 
 if __name__ == '__main__':
     app.run(debug=True)
