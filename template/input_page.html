@@ -129,6 +129,11 @@
         .scrollable p {
             margin: 8px 0;
         }
+        img {
+            max-width: 100%;
+            height: auto;
+            margin: 10px 0;
+        }
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
@@ -182,14 +187,13 @@
             </form>
         </div>
         <div class="result scrollable">
-            
             {% if pred3 and pred4 %}
                 <h2>Air Void: {{ pred1 }}</h2>
                 <h2>Gmb: {{ pred2 }}</h2>
                 <h2>VMA: {{ pred3 }}</h2>
                 <h2>VFB: {{ pred4 }}</h2>
                 <h2>OBC: {{ pred5 }}</h2>
-                
+
             {% endif %}
         </div>
     </div>
